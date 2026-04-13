@@ -51,7 +51,7 @@ function loadData(page = 0) {
             // ✅ STATS
             document.getElementById("totalUsers").innerText = data.totalElements;
             document.getElementById("totalExp").innerText = totalExp;
-            document.getElementById("pageInfoTop").innerText = currentPage + 1;
+            document.getElementById("pageInfoTop").innerText = page + 1;
 
             // ✅ pagination info
             currentPage = data.number;
@@ -132,37 +132,60 @@ function deleteUser(id) {
     });
 }
 
-// ✅ UPDATE (SMART INPUT)
+// ✅ UPDATE (FIXED - NO PROMPT, CLEAN UI)
 function updateUser(id) {
 
-    const name = prompt("Enter Name (leave blank to skip):");
-    const degree = prompt("Enter Degree:");
-    const exp = prompt("Enter Experience:");
-    const updatedBy = prompt("Enter your name:");
+    Swal.fire({
+        title: "Update User",
+        html: `
+            <input id="swal-name" class="swal2-input" placeholder="Name">
+            <input id="swal-degree" class="swal2-input" placeholder="Degree">
+            <input id="swal-exp" type="number" class="swal2-input" placeholder="Experience">
+            <input id="swal-updatedBy" class="swal2-input" placeholder="Updated By (required)">
+        `,
+        confirmButtonText: "Update",
+        focusConfirm: false,
+        preConfirm: () => {
 
-    if (!updatedBy) {
-        alert("Updated By is required");
-        return;
-    }
+            const name = document.getElementById("swal-name").value;
+            const degree = document.getElementById("swal-degree").value;
+            const exp = document.getElementById("swal-exp").value;
+            const updatedBy = document.getElementById("swal-updatedBy").value;
 
-    fetch(`https://career-backend-0nly.onrender.com/career/update/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: name || null,
-            degree: degree || null,
-            experienceYears: exp ? parseInt(exp) : 0,
-            updatedBy: updatedBy
-        })
-    })
-    .then(() => {
-        Swal.fire("Updated!", "User updated successfully.", "success");
-        loadData(currentPage);
+            if (!updatedBy) {
+                Swal.showValidationMessage("Updated By is required");
+                return false;
+            }
+
+            return {
+                name,
+                degree,
+                experienceYears: exp ? parseInt(exp) : 0,
+                updatedBy
+            };
+        }
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            fetch(`https://career-backend-0nly.onrender.com/career/update/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(result.value)
+            })
+            .then(res => res.text())
+            .then(() => {
+                Swal.fire("Updated!", "User updated successfully.", "success");
+                loadData(currentPage);
+            })
+            .catch(err => {
+                Swal.fire("Error!", err, "error");
+            });
+        }
     });
 }
-
 // ✅ NEXT PAGE
 function nextPage() {
     if (currentPage < totalPages - 1) {
