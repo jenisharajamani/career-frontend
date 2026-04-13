@@ -1,0 +1,174 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career - Berith Technologies</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Website.css">
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <div class="card shadow p-4 position-relative">
+
+        <!-- Close Button -->
+        <a href="index.html" class="position-absolute top-0 end-0 m-3 text-decoration-none fs-4">✖</a>
+
+        <h3 class="text-center mb-4">Career Form</h3>
+
+        <form id="careerForm">
+
+            <!-- NAME -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control"
+                        required minlength="3" pattern="[A-Za-z ]+">
+                    <div id="nameError" class="text-danger mt-1"></div>
+                </div>
+            </div>
+
+            <!-- DOB -->
+            <label class="form-label mt-3">Date of Birth</label>
+            <input type="date" id="dob" class="form-control" required>
+
+            <!-- AGE -->
+            <label class="form-label mt-3">Age</label>
+            <input type="number" id="age" class="form-control" readonly>
+
+            <!-- DEGREE + STREAM -->
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Educational Qualifications</label>
+                    <select id="degree" class="form-select" required>
+                        <option value="">Select</option>
+                        <option value="BE">B.E</option>
+                        <option value="BTECH">B.Tech</option>
+                        <option value="ME">M.E</option>
+                        <option value="MTECH">M.Tech</option>
+                        <option value="BSC">B.Sc</option>
+                        <option value="MSC">M.Sc</option>
+                        <option value="MCA">MCA</option>
+                    </select>
+                    <div id="degreeError" class="text-danger mt-1"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Stream</label>
+                    <input type="text" id="stream" class="form-control" required minlength="2">
+                    <div id="streamError" class="text-danger mt-1"></div>
+                </div>
+            </div>
+
+            <!-- INSTITUTE -->
+            <label class="form-label mt-3">Institute Name</label>
+            <input type="text" id="institute" class="form-control" required>
+
+            <!-- SKILLS -->
+            <!-- SKILLS -->
+<label class="form-label mt-3">Skillset</label>
+
+<!-- PRIMARY SKILLS -->
+<div id="primarySkills" class="mt-3">
+    <label class="form-label mt-3">Primary Skills</label>
+
+    <br><br>
+    <strong>Languages:</strong><br>
+    <input type="checkbox" value="JAVA"> JAVA
+    <input type="checkbox" value=".NET"> .NET
+    <input type="checkbox" value="PYTHON"> PYTHON
+    <input type="checkbox" value="C++"> C++
+    <input type="checkbox" value="JAVASCRIPT"> JAVASCRIPT
+    <input type="checkbox" value="HTML"> HTML
+    <input type="checkbox" value="CSS"> CSS
+
+    <br><br>
+    <strong>Tools:</strong><br>
+    <input type="checkbox" value="SPRINGBOOT"> SPRINGBOOT
+    <input type="checkbox" value="PYCHARM"> PYCHARM
+    <input type="checkbox" value="JUPYTER NOTEBOOK"> JUPYTER NOTEBOOK
+    <input type="checkbox" value="VISUAL STUDIO CODE"> VS CODE
+    <input type="checkbox" value="DJANGO"> DJANGO
+    <input type="checkbox" value="FLASK"> FLASK
+
+    <br><br>
+    <strong>Databases:</strong><br>
+    <input type="checkbox" value="MYSQL"> MYSQL
+    <input type="checkbox" value="MONGODB"> MONGODB
+    <input type="checkbox" value="ORACLE"> ORACLE
+    <input type="checkbox" value="FIREBASE"> FIREBASE
+</div>
+
+<!-- SECONDARY SKILLS -->
+<div id="secondarySkills" class="mt-4">
+    <label class="form-label mt-3">Secondary Skills</label>
+
+    <br><br>
+    <strong>Languages:</strong><br>
+    <input type="checkbox" value="JAVA"> JAVA
+    <input type="checkbox" value=".NET"> .NET
+    <input type="checkbox" value="PYTHON"> PYTHON
+    <input type="checkbox" value="C++"> C++
+    <input type="checkbox" value="JAVASCRIPT"> JAVASCRIPT
+    <input type="checkbox" value="HTML"> HTML
+    <input type="checkbox" value="CSS"> CSS
+
+    <br><br>
+    <strong>Tools:</strong><br>
+    <input type="checkbox" value="SPRINGBOOT"> SPRINGBOOT
+    <input type="checkbox" value="PYCHARM"> PYCHARM
+    <input type="checkbox" value="JUPYTER NOTEBOOK"> JUPYTER NOTEBOOK
+    <input type="checkbox" value="VISUAL STUDIO CODE"> VS CODE
+    <input type="checkbox" value="DJANGO"> DJANGO
+    <input type="checkbox" value="FLASK"> FLASK
+
+    <br><br>
+    <strong>Databases:</strong><br>
+    <input type="checkbox" value="MYSQL"> MYSQL
+    <input type="checkbox" value="MONGODB"> MONGODB
+    <input type="checkbox" value="ORACLE"> ORACLE
+    <input type="checkbox" value="FIREBASE"> FIREBASE
+</div>
+
+            <!-- EXPERIENCE -->
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">Years of Experience</label>
+                    <input type="number" id="experienceYears" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Previous Company Name</label>
+                    <input type="text" id="previousCompany" class="form-control">
+                </div>
+            </div>
+
+            <!-- JOB -->
+            <label class="form-label mt-3">Job Title</label>
+            <input type="text" id="jobTitle" class="form-control">
+
+            <!-- BUTTON -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+
+            <div id="successMsg" class="alert alert-success mt-3 d-none text-center">
+                              Saved successfully!
+            </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

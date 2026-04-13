@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #2c3e50;
+    position: fixed;
+}
+
+.sidebar h4 {
+    margin-bottom: 20px;
+}
+
+.sidebar .nav-link {
+    color: #bdc3c7;
+    margin: 10px 0;
+    display: block;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .active {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* MAIN */
+.main-content {
+    margin-left: 220px;
+    width: 100%;
+}
+
+/* TOPBAR */
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+/* CARD */
+.card-box {
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.bg-blue { background: #0d6efd; }
+.bg-green { background: #198754; }
+.bg-orange { background: #fd7e14; }
+
+/* TABLE */
+table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* SEARCH */
+.search-box {
+    max-width: 300px;
+}
+
+/* BUTTONS */
+.btn-warning {
+    background: #f39c12;
+    border: none;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    border: none;
+}
