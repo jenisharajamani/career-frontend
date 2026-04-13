@@ -3,34 +3,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("careerForm");
     if (!form) return;
 
-    // ✅ AUTO AGE CALCULATION
+    // ✅ AGE CALCULATION (FIXED)
     const dobInput = document.getElementById("dob");
     const ageInput = document.getElementById("age");
 
-    dobInput.addEventListener("change", function () {
+    dobInput.addEventListener("input", function () {
+        if (!this.value) {
+            ageInput.value = "";
+            return;
+        }
+
         const dob = new Date(this.value);
         const today = new Date();
 
         let age = today.getFullYear() - dob.getFullYear();
-        const m = today.getMonth() - dob.getMonth();
+        const monthDiff = today.getMonth() - dob.getMonth();
 
-        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
             age--;
         }
 
-        ageInput.value = age;
+        ageInput.value = age >= 0 ? age : "";
     });
 
     // ✅ SKILL TOGGLE
-    const skillPrimary = document.getElementById("skillPrimary");
-    const skillSecondary = document.getElementById("skillSecondary");
-
-    skillPrimary.addEventListener("change", function () {
+    document.getElementById("skillPrimary").addEventListener("change", function () {
         document.getElementById("primarySkills")
             .classList.toggle("d-none", !this.checked);
     });
 
-    skillSecondary.addEventListener("change", function () {
+    document.getElementById("skillSecondary").addEventListener("change", function () {
         document.getElementById("secondarySkills")
             .classList.toggle("d-none", !this.checked);
     });
@@ -39,41 +41,15 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        document.getElementById("nameError").innerText = "";
-        document.getElementById("degreeError").innerText = "";
-        document.getElementById("streamError").innerText = "";
-
         const name = document.getElementById("name").value.trim();
-        const dob = dobInput.value;
-        const age = ageInput.value;
-        const degree = document.getElementById("degree").value;
-        const stream = document.getElementById("stream").value.trim();
+        const dob = document.getElementById("dob").value;
+        const age = document.getElementById("age").value;
 
-        let isValid = true;
-
-        if (name.length < 3) {
-            document.getElementById("nameError").innerText = "Min 3 characters";
-            isValid = false;
+        if (!dob || !age) {
+            Swal.fire("Error!", "Please select valid Date of Birth", "error");
+            return;
         }
 
-        if (!dob) {
-            alert("Select DOB");
-            isValid = false;
-        }
-
-        if (degree === "") {
-            document.getElementById("degreeError").innerText = "Select degree";
-            isValid = false;
-        }
-
-        if (stream.length < 2) {
-            document.getElementById("streamError").innerText = "Min 2 chars";
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // ✅ SKILLS
         let primarySkills = [];
         document.querySelectorAll("#primarySkills input:checked")
             .forEach(cb => primarySkills.push(cb.value));
@@ -86,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
             name,
             dob,
             age,
-            degree,
-            stream,
+            degree: document.getElementById("degree").value,
+            stream: document.getElementById("stream").value,
             institute: document.getElementById("institute").value,
             jobTitle: document.getElementById("jobTitle").value,
             primarySkills: primarySkills.join(","),
@@ -103,19 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(data)
         })
-        .then(res => {
-            if (!res.ok) throw new Error("Failed");
-            return res.text();
-        })
+        .then(res => res.text())
         .then(() => {
-            Swal.fire("Success!", "Form submitted!", "success");
+            Swal.fire("Success!", "Form submitted successfully!", "success");
             form.reset();
-
-            document.getElementById("primarySkills").classList.add("d-none");
-            document.getElementById("secondarySkills").classList.add("d-none");
+            document.getElementById("age").value = "";
         })
-        .catch(() => {
-            Swal.fire("Error!", "Something went wrong!", "error");
+        .catch(err => {
+            Swal.fire("Error!", err, "error");
         });
 
     });
