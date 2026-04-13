@@ -50,20 +50,29 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         fetch("https://career-backend-0nly.onrender.com/career/saveCareer", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            Swal.fire("Success!", "Saved successfully!", "success");
-            form.reset();
-            ageInput.value = "";
-        })
-        .catch(() => {
-            Swal.fire("Error!", "Something went wrong", "error");
-        });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.then(async res => {
+    const message = await res.text();
+
+    if (!res.ok) {
+        throw new Error(message); // ✅ IMPORTANT
+    }
+
+    return message;
+})
+.then(msg => {
+    Swal.fire("Success!", msg || "Saved successfully!", "success");
+    form.reset();
+    document.getElementById("age").value = "";
+})
+.catch(err => {
+    Swal.fire("Error!", err.message, "error"); // ✅ IMPORTANT
+});
 
     });
 
