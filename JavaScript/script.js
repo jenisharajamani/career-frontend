@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ❗ Prevent errors if page doesn't have form (important fix)
     const form = document.getElementById("careerForm");
     if (!form) return;
 
-    // ✅ AUTO AGE
-    document.getElementById("dob").addEventListener("change", function () {
+    // ✅ AUTO AGE CALCULATION
+    const dobInput = document.getElementById("dob");
+    const ageInput = document.getElementById("age");
+
+    dobInput.addEventListener("change", function () {
         const dob = new Date(this.value);
         const today = new Date();
 
@@ -16,79 +18,62 @@ document.addEventListener("DOMContentLoaded", function () {
             age--;
         }
 
-        document.getElementById("age").value = age;
+        ageInput.value = age;
     });
 
-    // ✅ SKILL TOGGLE (SAFE FIX)
+    // ✅ SKILL TOGGLE
     const skillPrimary = document.getElementById("skillPrimary");
     const skillSecondary = document.getElementById("skillSecondary");
 
-    if (skillPrimary) {
-        skillPrimary.addEventListener("change", function () {
-            document.getElementById("primarySkills")
-                .classList.toggle("d-none", !this.checked);
-        });
-    }
+    skillPrimary.addEventListener("change", function () {
+        document.getElementById("primarySkills")
+            .classList.toggle("d-none", !this.checked);
+    });
 
-    if (skillSecondary) {
-        skillSecondary.addEventListener("change", function () {
-            document.getElementById("secondarySkills")
-                .classList.toggle("d-none", !this.checked);
-        });
-    }
+    skillSecondary.addEventListener("change", function () {
+        document.getElementById("secondarySkills")
+            .classList.toggle("d-none", !this.checked);
+    });
 
     // ✅ FORM SUBMIT
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        // ✅ SAFE ERROR CLEARING (important fix)
-        const nameError = document.getElementById("nameError");
-        const degreeError = document.getElementById("degreeError");
-        const streamError = document.getElementById("streamError");
+        document.getElementById("nameError").innerText = "";
+        document.getElementById("degreeError").innerText = "";
+        document.getElementById("streamError").innerText = "";
 
-        if (nameError) nameError.innerText = "";
-        if (degreeError) degreeError.innerText = "";
-        if (streamError) streamError.innerText = "";
-
-        const successMsg = document.getElementById("successMsg");
-        if (successMsg) {
-            successMsg.classList.add("d-none");
-        }
-
-        // ✅ GET VALUES
         const name = document.getElementById("name").value.trim();
-        const dob = document.getElementById("dob").value;
-        const age = document.getElementById("age").value;
+        const dob = dobInput.value;
+        const age = ageInput.value;
         const degree = document.getElementById("degree").value;
         const stream = document.getElementById("stream").value.trim();
-        const institute = document.getElementById("institute").value.trim();
-        const jobTitle = document.getElementById("jobTitle").value.trim();
 
         let isValid = true;
 
         if (name.length < 3) {
-            if (nameError) nameError.innerText = "Name must be at least 3 characters";
+            document.getElementById("nameError").innerText = "Min 3 characters";
             isValid = false;
         }
 
         if (!dob) {
-            alert("Please select Date of Birth");
+            alert("Select DOB");
             isValid = false;
         }
 
         if (degree === "") {
-            if (degreeError) degreeError.innerText = "Please select a degree";
+            document.getElementById("degreeError").innerText = "Select degree";
             isValid = false;
         }
 
         if (stream.length < 2) {
-            if (streamError) streamError.innerText = "Stream must be at least 2 characters";
+            document.getElementById("streamError").innerText = "Min 2 chars";
             isValid = false;
         }
 
         if (!isValid) return;
 
-        // ✅ SKILLS (UPDATED FIX — no checkbox dependency)
+        // ✅ SKILLS
         let primarySkills = [];
         document.querySelectorAll("#primarySkills input:checked")
             .forEach(cb => primarySkills.push(cb.value));
@@ -97,22 +82,20 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#secondarySkills input:checked")
             .forEach(cb => secondarySkills.push(cb.value));
 
-        // ✅ DATA
         const data = {
             name,
             dob,
             age,
             degree,
             stream,
-            institute,
-            jobTitle,
+            institute: document.getElementById("institute").value,
+            jobTitle: document.getElementById("jobTitle").value,
             primarySkills: primarySkills.join(","),
-            secondarySkills: secondarySkills.join(","), 
+            secondarySkills: secondarySkills.join(","),
             experienceYears: document.getElementById("experienceYears").value,
             previousCompany: document.getElementById("previousCompany").value
         };
 
-        // ✅ CORRECT API
         fetch("https://career-backend-0nly.onrender.com/career/saveCareer", {
             method: "POST",
             headers: {
@@ -121,22 +104,18 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(data)
         })
         .then(res => {
-            if (!res.ok) return res.text().then(err => { throw err });
+            if (!res.ok) throw new Error("Failed");
             return res.text();
         })
         .then(() => {
-            Swal.fire("Success!", "Form submitted successfully!", "success");
-
+            Swal.fire("Success!", "Form submitted!", "success");
             form.reset();
 
-            const primarySkillsDiv = document.getElementById("primarySkills");
-            const secondarySkillsDiv = document.getElementById("secondarySkills");
-
-            if (primarySkillsDiv) primarySkillsDiv.classList.add("d-none");
-            if (secondarySkillsDiv) secondarySkillsDiv.classList.add("d-none");
+            document.getElementById("primarySkills").classList.add("d-none");
+            document.getElementById("secondarySkills").classList.add("d-none");
         })
-        .catch(err => {
-            Swal.fire("Error!", err, "error");
+        .catch(() => {
+            Swal.fire("Error!", "Something went wrong!", "error");
         });
 
     });
