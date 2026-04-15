@@ -14,15 +14,6 @@ body {
     padding: 0;
 }
 
-/* 🔵 NAVBAR */
-.navbar-custom {
-    background: #1e5ed7;
-    display: flex;
-    justify-content: space-between; /* keep links on right */
-    align-items: center;
-    padding: 10px 20px;
-}
-
 /* 🔥 LOGO CENTER ALIGN (VERTICALLY PERFECT) */
 .logo-container {
     display: flex;
@@ -66,11 +57,6 @@ body {
     margin-left: 20px;
     text-decoration: none;
     font-size: 12px;
-}
-.nav-links {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
 }
 
 /* 🔥 EXACT LOGO LOOK */
@@ -125,7 +111,7 @@ body {
     height: 100%;
     width: 100%;
 
-    background: url('../Images/BG.png') no-repeat center;
+   background: url('Images/BG.png') no-repeat center;
     background-size: cover;
 
     opacity: 0.5;   /* ✅ WATERMARK EFFECT */
