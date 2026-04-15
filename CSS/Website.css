@@ -1,7 +1,164 @@
-/* 🌐 GLOBAL STYLES */
+/* 🌐 ROOT CONFIG (CHANGE HERE ANYTIME) */
+:root {
+    --primary-color: #1e5ed7;
+    --font-main: Verdana, Geneva, Tahoma, sans-serif;
+    --logo-size: 35px;
+    --brand-font-size: 12px;
+}
+
+/* 🌐 GLOBAL */
 body {
     background-color: whitesmoke;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+}
+
+/* 🔵 NAVBAR */
+.navbar-custom {
+    background: #1e5ed7;
+    display: flex;
+    justify-content: space-between; /* keep links on right */
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/* 🔥 LOGO CENTER ALIGN (VERTICALLY PERFECT) */
+.logo-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+/* 🔵 NAVBAR FULL CONTROL */
+.navbar-custom {
+    background: #1e5ed7;
+    display: flex;
+    align-items: center;
+    padding: 10px 40px;
+}
+
+/* LEFT EMPTY SPACE */
+.nav-left {
+    flex: 1;
+}
+
+/* CENTER LOGO */
+.logo-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* LOGO SIZE */
+.logo-main {
+    height: 70px;   /* increase if needed */
+}
+
+/* RIGHT MENU */
+.nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-links a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 12px;
+}
+.nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 🔥 EXACT LOGO LOOK */
+.logo {
+    height: 50px;   /* adjust if needed */
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-text {
+    color: white;
+    font-size: var(--brand-font-size);
+    font-weight: bold;
+    display: flex;
+    align-items: center;  /* ✅ TEXT CENTER WITH LOGO */
+}
+
+/* 🔗 NAV LINKS */
+.nav-links a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* 🎯 HERO SECTION (WITH WATERMARK EFFECT) */
+.hero {
+    position: relative;
+    text-align: center;
+
+    height: 100vh;   /* 🔥 FULL SCREEN HEIGHT */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+/* 🔥 WATERMARK BACKGROUND */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+
+    background: url('../Images/BG.png') no-repeat center;
+    background-size: cover;
+
+    opacity: 0.5;   /* ✅ WATERMARK EFFECT */
+    z-index: 0;
+}
+
+/* CONTENT ABOVE WATERMARK */
+.hero h1,
+.hero button {
+    position: relative;
+    z-index: 1;
+}
+
+/* 🏠 TITLE */
+.hero h1 {
+    font-size: 42px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* 🔘 APPLY BUTTON */
+.apply-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    background: #154bb5;
 }
 
 /* 🧾 CARD */
@@ -14,13 +171,38 @@ body {
     font-weight: bold;
     transition: 0.3s;
 }
+
 .card a:hover {
     color: red;
 }
 
-/* 🧠 FORM */
+/* 🧠 FORM LABEL */
 .form-label {
     font-weight: 500;
+}
+
+/* 🔵 FORM TITLE */
+.form-title {
+    background: var(--primary-color);
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 🧩 SKILLS */
+#primarySkills,
+#secondarySkills {
+    background: #e6f0ff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* 🔤 INPUTS */
+.form-control,
+.form-select {
+    font-size: 12px;
 }
 
 /* 🔘 BUTTONS */
@@ -28,22 +210,63 @@ body {
     border-radius: 8px;
 }
 
-/* 🧩 SKILL SECTION */
-#primarySkills,
-#secondarySkills {
-    background: #f1f3f5;
-    padding: 10px;
-    border-radius: 8px;
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
 }
 
-/* 📱 MOBILE IMPROVEMENTS */
+.btn-primary:hover {
+    background: #154bb5;
+}
+
+.btn-secondary {
+    background: gray;
+    border: none;
+}
+
+/* 📱 MOBILE */
 @media (max-width: 768px) {
-    .card {
-        padding: 15px;
+
+    .navbar-custom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        margin-top: 10px;
+    }
+
+    .hero {
+        padding: 60px 20px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
     }
 
     .btn {
         width: 100%;
         margin-bottom: 10px;
     }
+}
+.form-title {
+    background: #1e5ed7;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    position: relative;   /* 🔥 MUST */
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+.close-btn:hover {
+    color: red;
 }

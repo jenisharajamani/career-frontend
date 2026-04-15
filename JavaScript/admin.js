@@ -21,13 +21,13 @@ function loadData(page = 0) {
 
             let totalExp = 0;
 
-            data.content.forEach(user => {
+            data.content.forEach((user, index) => {
 
                 totalExp += user.experienceYears || 0;
 
                 const row = `
                     <tr>
-                        <td>${user.id}</td>
+                        <td>${index + 1}</td> <!-- ✅ FIXED -->
                         <td>${user.name || "-"}</td>
                         <td>${user.degree || "-"}</td>
                         <td>${user.stream || "-"}</td>
@@ -83,10 +83,10 @@ function renderTable(data) {
     const table = document.getElementById("tableBody");
     table.innerHTML = "";
 
-    data.forEach(user => {
+    data.forEach((user, index) => {
         const row = `
             <tr>
-                <td>${user.id}</td>
+                <td>${index + 1}</td>
                 <td>${user.name || "-"}</td>
                 <td>${user.degree || "-"}</td>
                 <td>${user.stream || "-"}</td>
