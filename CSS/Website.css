@@ -111,7 +111,7 @@ body {
     height: 100%;
     width: 100%;
 
-   background: url('Images/BG.png') no-repeat center;
+   background: url('../Images/BG.png') no-repeat center;
     background-size: cover;
 
     opacity: 0.5;   /* ✅ WATERMARK EFFECT */
